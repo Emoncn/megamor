@@ -38,15 +38,15 @@ public class PlayerMovementInputController : MonoBehaviour
         _look = value.Get<Vector2>();
     }
 
-    public void OnAim(InputValue value)
-    {
-        aimValue = value.Get<float>();
-    }
+    //public void OnAim(InputValue value)
+    //{
+    //    aimValue = value.Get<float>();
+    //}
 
-    public void OnFire(InputValue value)
-    {
-        fireValue = value.Get<float>();
-    }
+    //public void OnFire(InputValue value)
+    //{
+    //    fireValue = value.Get<float>();
+    //}
 
     public GameObject followTransform;
 
@@ -95,13 +95,13 @@ public class PlayerMovementInputController : MonoBehaviour
         {
             nextPosition = transform.position;
 
-            if (aimValue == 1)
-            {
-                //Set the player rotation based on the look transform
-                transform.rotation = Quaternion.Euler(0, followTransform.transform.rotation.eulerAngles.y, 0);
-                //reset the y rotation of the look transform
-                followTransform.transform.localEulerAngles = new Vector3(angles.x, 0, 0);
-            }
+            //if (aimValue == 1)
+            //{
+            //    //Set the player rotation based on the look transform
+            //    transform.rotation = Quaternion.Euler(0, followTransform.transform.rotation.eulerAngles.y, 0);
+            //    //reset the y rotation of the look transform
+            //    followTransform.transform.localEulerAngles = new Vector3(angles.x, 0, 0);
+            //}
 
             return;
         }
@@ -114,6 +114,9 @@ public class PlayerMovementInputController : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, followTransform.transform.rotation.eulerAngles.y, 0);
         //reset the y rotation of the look transform
         followTransform.transform.localEulerAngles = new Vector3(angles.x, 0, 0);
+
+        transform.position = nextPosition;
+
     }
 
 
