@@ -5,34 +5,42 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using System.Linq;
 using static UnityEditor.PlayerSettings;
+using System;
 
 public class NewBehaviourScript : MonoBehaviour
 {
+    private int frames = 0;
     public Transform[] sphereList;
-    const int GRAPH_DEGREE = 5;
-    const bool isDebug = true;
+    public int graphDegree = 5;
+    const bool IS_DEBUG = false;
+    const int JOINT_UPDATE_FRAMES = 10;
 
-    // Start is called before the first frame update
-    void Start()
+    void UpdateJoints()
     {
         int jointedAmnt;
 
-        // Copy of sphereList to order it without breaking stuff
-        Transform[] sphereListCopy = (Transform[]) sphereList.Clone();
+        sphereList = transform.GetComponentsInChildren<Transform>().Where(t => t != transform).ToArray();
+        // foreach(Transform sphere in sphereList) { print(sphere); }
 
-         // For each sphere, joint it to closest non-DEGREE-jointed until it has 2 joints
-        foreach(Transform sphereTransform in sphereList)
+        // Safety measure
+        graphDegree = Math.Min(graphDegree, sphereList.Length - 1);
+
+        // Copy of sphereList to order it without breaking stuff
+        Transform[] sphereListCopy = (Transform[])sphereList.Clone();
+
+        // For each sphere, joint it to closest non-DEGREE-jointed until it has 2 joints
+        foreach (Transform sphereTransform in sphereList)
         {
             jointedAmnt = sphereTransform.GetComponents<SpringJoint>().Length;
 
-            if (jointedAmnt < GRAPH_DEGREE)
+            if (jointedAmnt < graphDegree)
             {
 
                 sphereListCopy = sphereListCopy.OrderBy(x => Vector3.Distance(x.position, sphereTransform.position)).ToArray();
 
-                for (int i=1; i<sphereListCopy.Length; i++) // Skip first item (it's the current sphere)
+                for (int i = 1; i < sphereListCopy.Length; i++) // Skip first item (it's the current sphere)
                 {
-                    if (sphereListCopy[i].GetComponents<SpringJoint>().Length < GRAPH_DEGREE)
+                    if (sphereListCopy[i].GetComponents<SpringJoint>().Length < graphDegree)
                     {
                         // Found the closest non-double-jointed sphere!
                         SpringJoint joint = sphereTransform.AddComponent<SpringJoint>();
@@ -40,19 +48,30 @@ public class NewBehaviourScript : MonoBehaviour
 
                         jointedAmnt++;
 
-                        if (jointedAmnt >= GRAPH_DEGREE) { break; }
+                        if (jointedAmnt >= graphDegree) { break; }
                     }
                 }
             }
 
-            
         }
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        UpdateJoints();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isDebug)
+        frames++;
+        if (frames % JOINT_UPDATE_FRAMES == 0)
+        {
+            UpdateJoints();
+        }
+
+        if (IS_DEBUG)
         {
             foreach (Transform sphereTransform in sphereList)
             {

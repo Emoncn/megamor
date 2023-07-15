@@ -4,15 +4,31 @@ using UnityEngine;
 
 public class spawnBlob : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private GameObject _Sphere;
+    const float BLOB_SCALE = 5f;
+
     void Start()
     {
-        
-    }
+        float gridX = BLOB_SCALE;
+        float gridY = BLOB_SCALE;
+        float spacing = 1f;
+        int layers = 2;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        for (int i = 0; i < layers; i++)
+        {
+            for (int y = 1; y < gridY; y++)
+            {
+                for (int x = 1; x < gridX; x++)
+                {
+                    _Sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    Rigidbody rBody = _Sphere.AddComponent<Rigidbody>();
+
+                    _Sphere.name = "Sphere" + x.ToString() + "_" + y.ToString();
+                    _Sphere.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
+                    _Sphere.transform.position = new Vector3(x, i*2+1, y) * spacing;
+                    _Sphere.transform.parent = gameObject.transform;
+                }
+            }
+        }
     }
 }
