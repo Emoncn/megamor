@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class CamOnMe : MonoBehaviour
 {
-    public Transform follower;
+    //public Transform follower;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,10 +15,10 @@ public class CamOnMe : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(
-            follower.transform.position.x,
-            0,
-            follower.transform.position.z - 10f
-        );
+        //transform.position = new Vector3(
+        //    follower.transform.position.x,
+        //    0,
+        //    follower.transform.position.z - 10f
+        //);
     }
 }

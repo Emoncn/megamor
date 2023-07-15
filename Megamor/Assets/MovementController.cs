@@ -8,7 +8,7 @@ public class MovementController : MonoBehaviour
         x = 0,
         y = 0,
         z = 0,
-        speed = 1;
+        speed = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -25,19 +25,19 @@ public class MovementController : MonoBehaviour
             moveZ = 0;
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            moveX = 0.1f * this.speed;
+            moveX = 0.001f * this.speed;
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            moveX = -0.1f * this.speed;
+            moveX = -0.001f * this.speed;
         }
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            moveZ = 0.1f * this.speed;
+            moveZ = 0.001f * this.speed;
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            moveZ = -0.1f * this.speed;
+            moveZ = -0.001f * this.speed;
         }
 
         this.GetComponent<Transform>().position = new Vector3(
