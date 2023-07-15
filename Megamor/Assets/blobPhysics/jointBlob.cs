@@ -10,7 +10,7 @@ using System;
 public class NewBehaviourScript : MonoBehaviour
 {
     public Transform[] sphereList;
-    public int graphDegree = 5;
+    public int graphDegree = 8;
     const bool IS_DEBUG = true;
     const int JOINT_UPDATE_FRAMES = 60;
     private int frames = 0;
@@ -45,8 +45,10 @@ public class NewBehaviourScript : MonoBehaviour
                         // Found the closest non-double-jointed sphere!
                         SpringJoint joint = sphereTransform.AddComponent<SpringJoint>();
                         joint.connectedBody = sphereListCopy[i].GetComponent<Rigidbody>();
-                        joint.damper = 0.06f;
-                        joint.spring = 11;
+                        joint.damper = 0.01f;
+                        joint.spring = 14;
+                        //joint.maxDistance = 1;
+                        // joint.minDistance = .5f;
 
                         jointedAmnt++;
 
@@ -94,7 +96,7 @@ public class NewBehaviourScript : MonoBehaviour
     {
         if (frames % JOINT_UPDATE_FRAMES == 0)
         {
-            UpdateJoints();
+            // UpdateJoints();
         }
 
         UpdateCentroid();

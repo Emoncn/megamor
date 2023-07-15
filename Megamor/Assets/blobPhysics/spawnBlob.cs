@@ -5,14 +5,14 @@ using UnityEngine;
 public class spawnBlob : MonoBehaviour
 {
     private GameObject _Sphere;
-    const float BLOB_SCALE = 4f;
+    const float BLOB_SCALE = 7f;
 
     void Start()
     {
         float gridX = BLOB_SCALE;
         float gridY = BLOB_SCALE;
-        float spacing = .9f;
-        int layers = 2;
+        float spacing = .6f;
+        int layers = 3;
 
         for (int i = 0; i < layers; i++)
         {
@@ -24,7 +24,7 @@ public class spawnBlob : MonoBehaviour
                     Rigidbody rBody = _Sphere.AddComponent<Rigidbody>();
 
                     _Sphere.name = "Sphere" + x.ToString() + "_" + y.ToString();
-                    _Sphere.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
+                    _Sphere.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
                     _Sphere.transform.position = new Vector3(x, i*1.5f+1, y) * spacing;
                     _Sphere.transform.parent = gameObject.transform;
                 }
